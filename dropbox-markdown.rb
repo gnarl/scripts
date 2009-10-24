@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'rdiscount'
+require 'fileutils'
 
 # The program takes a Markdown document, converts it to HTML, and
 # outputs the HTML file to your Dropbox.  
@@ -13,7 +14,9 @@ require 'rdiscount'
 # the extension.  The output file is written to the relative directory
 # '../Dropbox/notes/'. 
 #
+# Author:: Chuck Fouts
 
+SCRIPT_DIR = File.dirname(__FILE__)
 OUT_DIR = '../Dropbox/notes/'
 
 filename = ARGV.shift
@@ -28,4 +31,5 @@ File.open( filename, 'r').each_line {|x| text << x }
 markdown = RDiscount.new(text)
 output =  markdown.to_html
 
+FileUtils.cd( SCRIPT_DIR )
 File.open( OUT_DIR + out_filename, 'w' ) { |x| x.puts output }
